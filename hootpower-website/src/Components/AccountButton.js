@@ -3,7 +3,7 @@ import React from 'react';
 
 class AccountButton extends React.Component {
   render() {
-    return <button type="button" class="btn btn-lg account-btn">{this.props.label}</button>
+    return <button type="button" className="btn btn-lg account-btn">{this.props.label}</button>
   }
 }
 
