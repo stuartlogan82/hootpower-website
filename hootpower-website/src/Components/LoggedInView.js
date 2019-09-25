@@ -2,6 +2,7 @@ import React from 'react';
 import UsageChart from '../Components/UsageChart'
 import Button from './AccountButton'
 import AccountButton from './AccountButton';
+import WebChat from './WebChat';
 
 class LoggedInView extends React.Component {
   render() {
@@ -35,6 +36,7 @@ class LoggedInView extends React.Component {
           </div>
         </div>
       </section>
+      <WebChat />
     </main>);
   }
 }
