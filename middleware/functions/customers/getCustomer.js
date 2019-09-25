@@ -34,7 +34,6 @@ exports.handler = async function (context, event, callback) {
     accountID: sForceQuery.accountDet__c
   };
   response.setBody(responseObj);
-  logger = await logout();
   callback(null, response);
 
   function login() {
