@@ -15,20 +15,19 @@ class LoggedInView extends React.Component {
         <div className="container">
 
           <div className="row">
-            <div className="col-sm-6">
+            <div className="col-sm-7">
               <UsageChart />
             </div>
 
-            <div className="col-sm-6">
+            <div className="col-sm-5">
               <div className="card">
                 <div className="card-header card-header-primary">
-                  <h2>Managing your account</h2>
+                  <h2>Your account</h2>
                 </div>
                 <div className="card-body">
                   <AccountButton label="Submit Meter Reading" />
                   <AccountButton label="Request a call" />
                   <AccountButton label="Change Address" />
-                  <p className="description">Give us a call!</p>
                 </div>
               </div>
             </div>
