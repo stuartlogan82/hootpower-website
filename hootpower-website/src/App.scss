@@ -1,3 +1,5 @@
+
+
 $primaryDark: #6C2099;
 $primary: #A768CC;
 $primaryLight: #A49CFF;
@@ -30,12 +32,13 @@ body {
 
 body {
     background-color: white;
-    color: $secondary;
+    color: $primary;
 }
 
 
 .bg-videoWrapper {
     background-color: $primaryDark;
+    height:400px;
 }
 
 .bg-video {
