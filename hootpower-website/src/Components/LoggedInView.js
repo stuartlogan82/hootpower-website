@@ -1,5 +1,6 @@
 import React from 'react';
-import UsageChart from '../Components/UsageChart'
+import UsageChart from '../Components/UsageChart';
+import '@progress/kendo-theme-material/dist/all.css';
 import Button from './AccountButton'
 import AccountButton from './AccountButton';
 import WebChat from './WebChat';
