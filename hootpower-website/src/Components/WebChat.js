@@ -33,7 +33,7 @@ class WebChat extends Component {
       .then(data => data.token)
       .then(token => {
         let body = {
-          "FlexFlowSid": "FO03d6165fb26ff67cf016259be62f1542",
+          "FlexFlowSid": "FO90bc940831c16d9703717f31373e2449",
           "Identity": "Jon",
           "CustomerFriendlyName": "Jon",
           "ChatFriendlyName": "Connected to: Jonathan",
