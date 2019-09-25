@@ -9,14 +9,14 @@ function App() {
           <img src="owl.png" alt="Logo" class="header__logo" />
         </div>
 
-        <div className='bg-videoWrapper'>
-          <div className="bg-video">
-            <video className="bg-video__content" autoPlay muted loop>
-              <source src="windfarm.mp4" type="video/mp4" />
-              Your browser is not supported!
+
+        <div className="bg-video">
+          <video className="bg-video__content" autoPlay muted loop>
+            <source src="windfarm.mp4" type="video/mp4" />
+            Your browser is not supported!
         </video>
-          </div>
         </div>
+
       </header>
 
       <div className="container">

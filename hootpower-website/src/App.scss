@@ -34,7 +34,7 @@ body {
 }
 
 .header {
-  height: 95vh;
+  height: 50vh;
   // background-image: linear-gradient(to right bottom,
   // rgba($color-primary, 0.8),
   // rgba($color-primary-dark, 0.8));
@@ -42,8 +42,8 @@ body {
   background-size: cover;
   background-position: top;
   position: relative;
-  -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 30vh, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 30vh, 0 100%);
 
   &__logo-box {
     position: absolute;
@@ -57,6 +57,7 @@ body {
 }
 
 .bg-video {
+  position: relative;
   height: 100%;
   width: 100%;
   opacity: .3;
@@ -65,6 +66,8 @@ body {
 
 
   &__content {
+    position: absolute;
+    top: -.5rem;
     height: 100%;
     width: 100%;
     object-fit: cover;
