@@ -1,8 +1,45 @@
 import React from 'react';
+import UsageChart from '../Components/UsageChart'
 
 
 class LoggedInView extends React.Component {
     render() {
-        return (<><p>Logged In!</p></>);
+        return (<main>
+            <section className="section-account">
+              <div className="u-center-text u-margin-bottom-big">
+                <h2 className="heading-secondary">
+                  Welcome, Customer Name
+          </h2>
+              </div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <p><strong>Customer: </strong>firstName lastName</p>
+                    <p><strong>Account ID: </strong>accountId</p>
+                    <p><strong>Address: </strong> address</p>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-6">
+                    <UsageChart />
+                  </div>
+  
+                  <div className="col-sm-6">
+                    <div className="card">
+                      <div className="card-header card-header-primary">
+                        <h2>Managing your account</h2>
+                      </div>
+                      <div className="card-body">
+                        <p className="description">Give us a call!</p>
+                      </div>
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            </section>
+          </main>);
     }
 }
+
+export default LoggedInView

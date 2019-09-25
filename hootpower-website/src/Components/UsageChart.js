@@ -8,7 +8,7 @@ class UsageChart extends React.Component {
           <h2>Energy Usage</h2>
         </div>
         <div className="card-body">
-          <p className="description"></p>
+          <p className="description">Chart Goes Here</p>
         </div>
       </div>;
     }
