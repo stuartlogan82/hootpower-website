@@ -1,8 +1,6 @@
-
-
-$primaryDark: #6C2099;
-$primary: #A768CC;
-$primaryLight: #A49CFF;
+$color-primary-dark: #6C2099;
+$color-primary: #A768CC;
+$color-primary-light: #A49CFF;
 
 $secondary: #FFF6CB;
 $secondaryDark: #CCA968;
@@ -21,7 +19,7 @@ html {
 
   /* most browsers default to 16px. Hardcoding 10px means it won't work on some displays where users have zoomed in/set a different font size. 16/10 = 62.5% */
 
-  
+
 }
 
 body {
@@ -31,20 +29,44 @@ body {
 }
 
 body {
-    background-color: white;
-    color: $primary;
+  background-color: white;
+  color: $secondary;
 }
 
+.header {
+  height: 95vh;
+  // background-image: linear-gradient(to right bottom,
+  // rgba($color-primary, 0.8),
+  // rgba($color-primary-dark, 0.8));
+  background-color: $color-primary-dark;
+  background-size: cover;
+  background-position: top;
+  position: relative;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
 
-.bg-videoWrapper {
-    background-color: $primaryDark;
-    height:400px;
+  &__logo-box {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+  }
+
+  &__logo {
+    height: 10rem;
+  }
 }
 
 .bg-video {
-    height:100%;
-    width:100%;
-    opacity: 0.15;
-    overflow:hidden;
-    z-index: -1;
+  height: 100%;
+  width: 100%;
+  opacity: .3;
+  overflow: hidden;
+  z-index: -1;
+
+
+  &__content {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
 }
