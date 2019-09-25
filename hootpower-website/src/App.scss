@@ -1,0 +1,47 @@
+$primaryDark: #6C2099;
+$primary: #A768CC;
+$primaryLight: #A49CFF;
+
+$secondary: #FFF6CB;
+$secondaryDark: #CCA968;
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  // This defines what 1rem is
+  font-size: 62.5%;
+
+  /* most browsers default to 16px. Hardcoding 10px means it won't work on some displays where users have zoomed in/set a different font size. 16/10 = 62.5% */
+
+  
+}
+
+body {
+  box-sizing: border-box;
+  padding: 3rem;
+
+}
+
+body {
+    background-color: white;
+    color: $secondary;
+}
+
+
+.bg-videoWrapper {
+    background-color: $primaryDark;
+}
+
+.bg-video {
+    height:100%;
+    width:100%;
+    opacity: 0.15;
+    overflow:hidden;
+    z-index: -1;
+}
