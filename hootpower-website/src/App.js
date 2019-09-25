@@ -2,6 +2,7 @@ import React from 'react';
 import './App.scss';
 import HomePageView from './Components/HomePageView'
 import LoggedInView from './Components/LoggedInView'
+import Header from './Components/Header'
 
 class App extends React.Component {
 
