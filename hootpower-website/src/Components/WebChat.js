@@ -4,6 +4,9 @@ import { Chat as ChatUI } from '@progress/kendo-react-conversational-ui';
 import * as base64 from 'base-64';
 
 class WebChat extends Component {
+  token;
+  channelSid;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -21,9 +24,6 @@ class WebChat extends Component {
   }
 
   componentDidMount() {
-
-
-
     fetch('https://iam.twilio.com/v1/Accounts/ACe521d5e94344b6e3cfa9befa02a3521b/Tokens', {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
@@ -38,7 +38,7 @@ class WebChat extends Component {
           "Identity": data.identity
         }
 
-
+        this.token = data.token;
         let headers = new Headers();
         headers.append('Authorization', 'Basic ' + base64.encode("token:" + data.token));
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -48,15 +48,43 @@ class WebChat extends Component {
           body: this.encodeFormData(body)
         })
       })
-      .then(res => {
-        console.log(res.json())
-      }
-      )
-      //.then(this.setupChatClient)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        Chat.create(this.token)
+          .then(client => client.getChannelBySid(data.sid))
+          .then(channel => {
+            channel.on('messageAdded', message => console.log(message));
+            channel.sendMessage("Hello Matthias");
+          }
+          )
+      })
       .catch(this.handleError);
 
   }
 
+  setupChatClient(client, channelSid) {
+    this.client = client;
+    console.log("CLIENT>>>> " + client);
+    this.client
+      .getChannelByUniqueName('general')
+      .then(channel => channel)
+      .catch(error => {
+        if (error.body.code === 50300) {
+          return this.client.createChannel({ uniqueName: 'general' });
+        } else {
+          this.handleError(error);
+        }
+      })
+      .then(channel => {
+        this.channel = channel;
+        return this.channel.join().catch(() => { });
+      })
+      .then(() => {
+        // Success!
+      })
+      .catch(this.handleError);
+  }
   handleError(error) {
     console.error(error);
     // this.setState({
