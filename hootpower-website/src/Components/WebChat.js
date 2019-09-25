@@ -30,19 +30,17 @@ class WebChat extends Component {
       body: JSON.stringify({ 'products': ['flex'] })
     })
       .then(res => res.json())
-      .then(data => data.token)
-      .then(token => {
+      .then(data => {
         let body = {
-          "FlexFlowSid": "FO03d6165fb26ff67cf016259be62f1542",
-          "Identity": "Jon",
-          "CustomerFriendlyName": "Jon",
-          "ChatFriendlyName": "Connected to: Jonathan",
-          "ChatUserFriendlyName": "Jon"
+          "FlexFlowSid": "FO90bc940831c16d9703717f31373e2449",
+          "ChatFriendlyName": "Webhchat",
+          "CustomerFriendlyName": "Customer",
+          "Identity": data.identity
         }
 
 
         let headers = new Headers();
-        headers.append('Authorization', 'Basic ' + base64.encode("token:" + token));
+        headers.append('Authorization', 'Basic ' + base64.encode("token:" + data.token));
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return fetch('https://flex-api.twilio.com/v1/WebChannels', {
           headers: headers,
