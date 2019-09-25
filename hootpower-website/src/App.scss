@@ -5,6 +5,13 @@ $color-primary-light: #A49CFF;
 $secondary: #FFF6CB;
 $secondaryDark: #CCA968;
 
+$color-grey-light-1: #f7f7f7f7;
+$color-grey-light-2: #eee;
+
+$color-grey-dark: #777;
+$color-grey-dark-2: #999;
+$color-grey-dark-3: #333;
+
 *,
 *::after,
 *::before {
@@ -72,4 +79,10 @@ body {
     width: 100%;
     object-fit: cover;
   }
+}
+
+.section-account {
+  background-color: $color-grey-light-1;
+  padding: 10rem 0;
+  margin-top: -20vh;
 }
