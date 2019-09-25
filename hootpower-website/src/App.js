@@ -1,24 +1,11 @@
 import React from 'react';
 import './App.scss';
 import UsageChart from './Components/UsageChart'
-
+import Header from './Components/Header'
 function App() {
   return (
     <>
-      <header className="header">
-        <div className="header__logo-box">
-          <img src="owl.png" alt="Logo" className="header__logo" />
-        </div>
-
-
-        <div className="bg-video">
-          <video className="bg-video__content" autoPlay muted loop>
-            <source src="windfarm.mp4" type="video/mp4" />
-            Your browser is not supported!
-        </video>
-        </div>
-
-      </header>
+      <Header />
       <main>
         <section className="section-account">
           <div className="u-center-text u-margin-bottom-big">
