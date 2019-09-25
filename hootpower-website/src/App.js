@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.scss';
+import UsageChart from './Components/UsageChart'
 
 function App() {
   return (
@@ -29,14 +30,7 @@ function App() {
         </div>
         <div className="row">
           <div className="col-sm-6">
-            <div className="card">
-              <div className="card-header card-header-primary">
-                <h2>Energy Usage</h2>
-              </div>
-              <div className="card-body">
-                <p className="description">Hello World</p>
-              </div>
-            </div>
+            <UsageChart />
           </div>
 
           <div className="col-sm-6">
