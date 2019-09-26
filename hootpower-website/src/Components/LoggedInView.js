@@ -38,34 +38,34 @@ class LoggedInView extends React.Component {
                 </div>
                 <div className="card-body">
                   {this.props.userInformation != null ? (
-                  <table className="table table-condensed">
-                    <tr>
-                      <th>Name</th>
-                      <td>
-                        {this.props.userInformation.firstName} {this.props.userInformation.lastName}<br />
-                        {this.props.userInformation.emailAddress}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Customer Number</th>
-                      <td>{this.props.userInformation.customerId}</td>
-                    </tr>
-                    <tr>
-                      <th>Customer Address</th>
-                      <td>{this.props.userInformation.address} <br />{this.props.userInformation.postCode}</td>
-                    </tr>
-                    <tr>
-                      <th>Account ID</th>
-                      <td>{this.props.userInformation.accountID}</td>
-                    </tr>
-                    <tr>
-                      <th>Sign Out</th>
-                      <td><button className="btn btn-xs btn-primary" onClick={this.onLogOut}>Log Out</button></td>
-                    </tr>
-                  </table>)
-                  : (<div>Loading...</div>)
+                    <table className="table table-condensed">
+                      <tr>
+                        <th>Name</th>
+                        <td>
+                          {this.props.userInformation.firstName} {this.props.userInformation.lastName}<br />
+                          {this.props.userInformation.emailAddress}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Customer Number</th>
+                        <td>{this.props.userInformation.customerId}</td>
+                      </tr>
+                      <tr>
+                        <th>Customer Address</th>
+                        <td>{this.props.userInformation.address} <br />{this.props.userInformation.postCode}</td>
+                      </tr>
+                      <tr>
+                        <th>Account ID</th>
+                        <td>{this.props.userInformation.accountID}</td>
+                      </tr>
+                      <tr>
+                        <th>Sign Out</th>
+                        <td><button className="btn btn-xs btn-primary" onClick={this.onLogOut}>Log Out</button></td>
+                      </tr>
+                    </table>)
+                    : (<div>Loading...</div>)
 
-                }
+                  }
                 </div>
               </div>
 
@@ -83,7 +83,7 @@ class LoggedInView extends React.Component {
                   <h2>How can we help?</h2>
                 </div>
                 <div className="card-body">
-                  {this.props.userInformation ? <WebChat firstName={this.props.userInformation.firstName} /> : "Loading Live Chat"}
+                  {this.props.userInformation ? <WebChat firstName={this.props.userInformation.firstName} fetchCustomerData={this.props.fetchCustomerData} onAddressUpdate={this.props.onAddressUpdate} /> : "Loading Live Chat"}
                 </div>
               </div>
             </div>

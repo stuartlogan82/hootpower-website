@@ -14,6 +14,7 @@ class HomePageView extends React.Component {
 
 
 
+
   render() {
     return (
       <section className="section-account">

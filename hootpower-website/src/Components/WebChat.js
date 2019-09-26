@@ -99,7 +99,11 @@ class WebChat extends Component {
                 this.addSuggestions();
               }
               if (message.body.includes("Thank you, I have updated your address.")) {
-                alert("Address Changed!");
+                this.props.fetchCustomerData("447507340455").then(data => {
+                  this.setState({ postCode: data.postCode, address: data.address })
+                  console.log(data)
+                  this.props.onAddressUpdate(data.userInformation.address, data.userInformation.postCode);
+                })
               }
             });
 

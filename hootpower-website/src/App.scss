@@ -146,15 +146,26 @@ body {
   background-color: $color-primary-light !important;
   border-color: $color-secondary-dark !important;
   border-width: .1rem !important;
-  color: $color-grey-dark-3 !important;
-  font-size: 1rem !important;
-  font-weight: 200 !important;
+  color: white !important;
+  font-size: 1.1rem !important;
+  font-weight: bold !important;
 }
 
 .k-chat .k-message-group:not(.k-alt) .k-only .k-bubble {
   background-color: $color-secondary !important;
   border-color: $color-primary-light !important;
   border-width: .1rem !important;
-  font-size: 1rem !important;
-  font-weight: 200 !important;
+  font-size: 1.1rem !important;
+  font-weight: bold !important;
+}
+
+.k-chat {
+  border-radius: .3rem;
+}
+
+.k-chat .k-quick-reply {
+  font-size: 1.1rem !important;
+  background-color: $color-primary !important;
+  color: white !important;
+  border-radius: .3rem !important;
 }
