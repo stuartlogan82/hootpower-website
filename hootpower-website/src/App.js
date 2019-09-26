@@ -20,10 +20,9 @@ class App extends React.Component {
 
   toggleLoginState = (logIn) => {
 
-    if(logIn == true){
+    if(logIn === true){
       
 
-        // {"custID":"CU-001","firstName":"John","lastName":"Smith","postCode":"W1 123","address":"4 Small Avenue","emailAddress":"jsmith@example.com","accountID":"a0H4J0000029PHiUAM"}
     
         setTimeout(go => {
           this.service
@@ -35,12 +34,16 @@ class App extends React.Component {
                   userInformation: { 
                     firstName: d.firstName, 
                     lastName: d.lastName,
-                    customerId: d.custID
+                    customerId: d.custID,
+                    postCode: d.postCode,
+                    address: d.address,
+                    emailAddress: d.emailAddress,
+                    accountID: d.accountID
                   }
                 });
                 
             });
-          },2000);     
+          },100);     
     
     }else{
       this.setState(state => ({

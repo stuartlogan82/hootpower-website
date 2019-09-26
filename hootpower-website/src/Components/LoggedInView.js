@@ -23,6 +23,7 @@ class LoggedInView extends React.Component {
 
 
   render() {
+    console.log(this.state);
     return (<main>
       <section className="section-account">
 
@@ -36,15 +37,26 @@ class LoggedInView extends React.Component {
                   <h2>Account Details</h2>
                 </div>
                 <div className="card-body">
-                  {this.state.userInformation != null ? (
+                  {this.props.userInformation != null ? (
                   <table className="table table-condensed">
                     <tr>
                       <th>Name</th>
-                      <td>{this.props.userInformation.firstName} {this.props.userInformation.lastName}</td>
+                      <td>
+                        {this.props.userInformation.firstName} {this.props.userInformation.lastName}<br />
+                        {this.props.userInformation.emailAddress}
+                      </td>
                     </tr>
                     <tr>
                       <th>Customer Number</th>
                       <td>{this.props.userInformation.customerId}</td>
+                    </tr>
+                    <tr>
+                      <th>Customer Address</th>
+                      <td>{this.props.userInformation.address} <br />{this.props.userInformation.postCode}</td>
+                    </tr>
+                    <tr>
+                      <th>Account ID</th>
+                      <td>{this.props.userInformation.accountID}</td>
                     </tr>
                     <tr>
                       <th>Sign Out</th>
@@ -71,10 +83,7 @@ class LoggedInView extends React.Component {
                   <h2>How can we help?</h2>
                 </div>
                 <div className="card-body">
-                  <WebChat firstName={this.props.userInformation.firstName} />
-                  {/* <AccountButton label="Submit Meter Reading" />
-                  <AccountButton label="Request a call" />
-                  <AccountButton label="Change Address" /> */}
+                  {this.props.userInformation ? <WebChat firstName={this.props.userInformation.firstName} /> : "Loading Live Chat"}
                 </div>
               </div>
             </div>
