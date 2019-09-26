@@ -27,7 +27,7 @@ class LoggedInView extends React.Component {
     return (<main>
       <section className="section-account">
 
-        <div className="container">
+        <div className="container u-margin-top-medium">
 
           <div className="row">
             <div className="col-sm-7">

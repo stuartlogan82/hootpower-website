@@ -98,6 +98,9 @@ class WebChat extends Component {
               if (message.body.includes("Is there anything else I can help you with?")) {
                 this.addSuggestions();
               }
+              if (message.body.includes("Thank you, I have updated your address.")) {
+                alert("Address Changed!");
+              }
             });
 
             channel.sendMessage("ahoy");
