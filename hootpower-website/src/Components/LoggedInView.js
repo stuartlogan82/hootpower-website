@@ -1,8 +1,6 @@
 import React from 'react';
 import UsageChart from '../Components/UsageChart';
 import '@progress/kendo-theme-material/dist/all.css';
-import Button from './AccountButton'
-import AccountButton from './AccountButton';
 import WebChat from './WebChat';
 import Configuration from '../Data/Configuration';
 import RequestService from '../Data/RequestService';
@@ -24,19 +22,19 @@ class LoggedInView extends React.Component {
   }
 
 
-
   render() {
     return (<main>
       <section className="section-account">
-        
+
         <div className="container">
 
           <div className="row">
             <div className="col-sm-7">
-            <div className="card">
+
+              <div className="card">
                 <div className="card-header card-header-primary">
-                  <h2>Account Details</h2>  
-                </div> 
+                  <h2>Account Details</h2>
+                </div>
                 <div className="card-body">
                   {this.state.userInformation != null ? (
                   <table className="table table-condensed">
@@ -60,17 +58,17 @@ class LoggedInView extends React.Component {
               </div>
 
               <hr />
-              
+
               <UsageChart />
 
-              
+
 
             </div>
 
             <div className="col-sm-5">
               <div className="card">
                 <div className="card-header card-header-primary">
-                  <h2>Your account</h2>
+                  <h2>How can we help?</h2>
                 </div>
                 <div className="card-body">
                   <WebChat firstName={this.props.userInformation.firstName} />
