@@ -6,6 +6,8 @@ import * as base64 from 'base-64';
 class WebChat extends Component {
   token;
   channelSid;
+  channel;
+  client;
 
   constructor(props) {
     super(props);
@@ -63,11 +65,15 @@ class WebChat extends Component {
       .then(data => {
         console.log(data);
         Chat.create(this.token)
-          .then(client => client.getChannelBySid(data.sid))
+          .then(client => {
+            this.client = client;
+            return client.getChannelBySid(data.sid)
+          })
           .then(channel => {
+            this.channel = channel;
             this.setState({ isLoading: false });
             channel.getMessages().then(this.messagesLoaded);
-            channel.on('messageAdded', message => console.log(message));
+            channel.on('messageAdded', this.messageAdded);
           }
           )
       })
