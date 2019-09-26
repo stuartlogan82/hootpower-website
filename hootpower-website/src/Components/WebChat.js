@@ -85,7 +85,35 @@ class WebChat extends Component {
           .then(channel => {
             this.channel = channel;
             this.setState({ isLoading: false });
-            channel.getMessages().then(this.messagesLoaded);
+            channel.getMessages().then(this.messagesLoaded).then(() => {
+              const suggestions = {
+                author: this.bot,
+                suggestedActions:
+                  [{
+                    value: "submit a meter reading",
+                    type: "reply"
+                  },
+                  {
+                    value: "I've moved house",
+                    type: "reply"
+                  },
+                  {
+                    value: "See my appointments",
+                    type: "reply"
+                  },
+                  {
+                    value: "Smart meter install",
+                    type: "reply"
+                  }]
+              }
+              let messages = this.state.messages
+              messages.push(suggestions)
+              messages.push()
+              this.setState(prevState => ({
+                ...prevState,
+                messages
+              }))
+            });
             channel.on('messageAdded', message => {
               this.messageAdded(message)
             });

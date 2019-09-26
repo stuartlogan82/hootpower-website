@@ -128,3 +128,18 @@ body {
   width: 100%;
   display: block;
 }
+
+.k-chat .k-alt .k-bubble {
+  background-color: $color-primary-light !important;
+  border-color: $color-secondary-dark !important;
+  border-width: .1rem;
+  color: $color-grey-light-1;
+  font-size: 1rem;
+}
+
+.k-chat .k-message-group:not(.k-alt) .k-only .k-bubble {
+  background-color: $color-secondary !important;
+  border-color: $color-primary-light !important;
+  border-width: .1rem;
+  font-size: 1rem;
+}
