@@ -8,14 +8,31 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { isLoggedIn: true };
+    this.state = { 
+      isLoggedIn: false,
+      userInformation: {
+        firstName: "Jeff",
+        lastName: "Lawson",
+        accountNumber: "JLAW11111"
+      }
+    };
+
+    this.toggleLoginState = this.toggleLoginState.bind(this);
+
+  }
+
+  toggleLoginState() {
+    this.setState(state => ({
+      isLoggedIn: !state.isLoggedIn
+    }));
   }
 
   render() {
     return (
       <>
-        <Header />
-        {this.state.isLoggedIn ? (<LoggedInView />) : (<HomePageView />)}
+        <button className="btn btn-default" onClick={this.toggleLoginState}>Toggle Login State</button>
+        <Header isLoggedIn={this.state.isLoggedIn} />
+        {this.state.isLoggedIn ? (<LoggedInView userInformation={this.state.userInformation} />) : (<HomePageView />)}
       </>
     );
   }

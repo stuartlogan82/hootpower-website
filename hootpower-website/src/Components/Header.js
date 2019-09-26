@@ -2,12 +2,18 @@ import React from 'react';
 
 
 class Header extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <header className="header">
         <div className="header__logo-box">
           <img src="owl.png" alt="Logo" className="header__logo" />
-          <h1 className="header__text">Hoot Power</h1>
+          <h1 className="header__text">Hoot Power
+          </h1>
         </div>
 
 

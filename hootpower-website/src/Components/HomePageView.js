@@ -10,7 +10,7 @@ class HomePageView extends React.Component {
                 </div>
                 <div className="team">
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-md-3">
                             <div className="team-player">
                                 <div className="card card-plain">
                                     <div className="col-md-6 ml-auto mr-auto">
@@ -29,26 +29,8 @@ class HomePageView extends React.Component {
                             </div>
                             
                         </div>
-                        <div className="col-md-4">
-                            <div className="team-player">
-                                <div className="card card-plain">
-                                    <div className="col-md-6 ml-auto mr-auto">
-                                        <img src="dpj.jpeg" className="img-raised rounded-circle img-fluid" />
-                                    </div>
-                                    <h4 className="card-title">David
-                                        <br />
-                                        <small className="card-description text-muted">Welsh Businessman</small> 
-                                    </h4>
-                                    <div className="card-body">
-                                        <p className="card-description">
-                                            &quot;I wouldn't buy my Owlectricity from anybody else!&quot;
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div className="col-md-4">
+
+                        <div className="col-md-3">
                             <div className="team-player">
                                 <div className="card card-plain">
                                     <div className="col-md-6 ml-auto mr-auto">
@@ -67,6 +49,45 @@ class HomePageView extends React.Component {
                             </div>
                             
                         </div>
+                        <div className="col-md-3">
+                            <div className="team-player">
+                                <div className="card card-plain">
+                                    <div className="col-md-6 ml-auto mr-auto">
+                                        <img src="karima.jpeg" className="img-raised rounded-circle img-fluid" />
+                                    </div>
+                                    <h4 className="card-title">Karima
+                                        <br />
+                                        <small className="card-description text-muted">Innovator</small> 
+                                    </h4>
+                                    <div className="card-body">
+                                        <p className="card-description">
+                                            &quot;Hoot Power for Business is amazing!!&quot;
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div className="col-md-3">
+                            <div className="team-player">
+                                <div className="card card-plain">
+                                    <div className="col-md-6 ml-auto mr-auto">
+                                        <img src="dpj.jpeg" className="img-raised rounded-circle img-fluid" />
+                                    </div>
+                                    <h4 className="card-title">David
+                                        <br />
+                                        <small className="card-description text-muted">Welsh Businessman</small> 
+                                    </h4>
+                                    <div className="card-body">
+                                        <p className="card-description">
+                                            &quot;I wouldn't buy my Owlectricity from anybody else!&quot;
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
                     </div>
                 </div>
                 
