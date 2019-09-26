@@ -15,20 +15,12 @@ exports.handler = async function (context, event, callback) {
     let logger = await login();
     console.log('This is the response from login: ', logger);
     var queryString = `SELECT comments__c, Customer__c, description__c, Employee__c, jobDate__c, status__c, timeSlot__c, type__c FROM Job__c where Customer__c = '${input}'`;
-    let sForceQuery = await sfdcQuery(queryString);
-
-    let responseObj = {
-        id: sForceQuery.refNumber__c,
-        description: sForceQuery.description__c,
-        employeeID: sForceQuery.Employee__c,
-        customerID: sForceQuery.Customer__c,
-        type: sForceQuery.type__c,
-        jobDate: sForceQuery.jobDate__c,
-        timeSlot: sForceQuery.timeSlot__c,
-        status: sForceQuery.status__c,
-        comments: sForceQuery.comments__c
-    };
-    response.setBody(responseObj);
+    let results = await sfdcQuery(queryString);
+    if (results.length == 0) {
+        queryString = `SELECT comments__c, Customer__c, description__c, Employee__c, jobDate__c, status__c, timeSlot__c, type__c FROM Job__c where Employee__c = '${input}'`;
+        results = await sfdcQuery(queryString);
+    }
+    response.setBody(results);
     logger = await logout();
     callback(null, response);
 
@@ -57,18 +49,33 @@ exports.handler = async function (context, event, callback) {
     }
 
     function sfdcQuery(qs) {
+        var records = [];
         return new Promise(function (resolve, reject) {
-            var records = [];
-            conn.query(qs, function (err, result) {
-                if (err) {
-                    console.error('There has been a failure with the SFDC query, message is: ' + err);
+            var query = conn.query(qs)
+                .on("record", function (record) {
+                    let responseObj = {
+                        id: record.refNumber__c,
+                        description: record.description__c,
+                        employeeID: record.Employee__c,
+                        customerID: record.Customer__c,
+                        type: record.type__c,
+                        jobDate: record.jobDate__c,
+                        timeSlot: record.timeSlot__c,
+                        status: record.status__c,
+                        comments: record.comments__c
+                    };
+                    records.push(responseObj);
+                })
+                .on("end", function () {
+                    console.log("total in database : " + query.totalSize);
+                    console.log("total fetched : " + query.totalFetched);
+                    resolve(records);
+                })
+                .on("error", function (err) {
+                    console.error(err);
                     resolve(err);
-                }
-                console.log("ID: " + result.records[0].firstName__c);
-                resolve(result.records[0]);
-            });
+                })
+                .run({ autoFetch: true, maxFetch: 1000 }); // synonym of Query#execute();
         })
     }
-
-
 };

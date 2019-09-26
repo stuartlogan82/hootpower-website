@@ -1,3 +1,4 @@
+
 exports.handler = async function (context, event, callback) {
     let response = new Twilio.Response();
     response.appendHeader("Access-Control-Allow-Origin", "*");
@@ -5,6 +6,7 @@ exports.handler = async function (context, event, callback) {
     response.appendHeader("Access-Control-Allow-Headers", "Content-Type");
     response.appendHeader("Content-Type", "application/json");
 
+    //const jsforcelib = require('../../libs/jsforce-lib');
 
     console.log('This has started');
     const jsforce = require('jsforce');
@@ -18,7 +20,7 @@ exports.handler = async function (context, event, callback) {
     var queryString = `SELECT Name, Meter__c, date__c, value__c FROM Reading__c where Meter__c = '${input}'`;
     let results = await sfdcQuery(queryString);
     response.setBody(results);
-    logger = await logout();
+    //logger = await logout();
     callback(null, response);
 
     function login() {

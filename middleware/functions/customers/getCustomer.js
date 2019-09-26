@@ -5,7 +5,6 @@ exports.handler = async function (context, event, callback) {
   response.appendHeader("Access-Control-Allow-Headers", "Content-Type");
   response.appendHeader("Content-Type", "application/json");
 
-
   console.log('This has started');
   const jsforce = require('jsforce');
   var input = event.phNumber;
@@ -20,20 +19,8 @@ exports.handler = async function (context, event, callback) {
   let logger = await login();
   console.log('This is the response from login: ', logger);
   var queryString = `SELECT Name, firstName__c, lastName__c, postCode__c, Address__c, accountDet__c, emailAddress__c FROM Customer__c where phNumber__c = '${plus}'`;
-  let sForceQuery = await sfdcQuery(queryString);
-
-  console.log('This is the first Name: ', sForceQuery.firstName__c);
-
-  let responseObj = {
-    custID: sForceQuery.Name,
-    firstName: sForceQuery.firstName__c,
-    lastName: sForceQuery.lastName__c,
-    postCode: sForceQuery.postCode__c,
-    address: sForceQuery.Address__c,
-    emailAddress: sForceQuery.emailAddress__c,
-    accountID: sForceQuery.accountDet__c
-  };
-  response.setBody(responseObj);
+  let results = await sfdcQuery(queryString);
+  response.setBody(results);
   callback(null, response);
 
   function login() {
@@ -61,20 +48,33 @@ exports.handler = async function (context, event, callback) {
   }
 
   function sfdcQuery(qs) {
+    let responseObj = {}
     return new Promise(function (resolve, reject) {
-      var records = [];
-      conn.query(qs, function (err, result) {
-        if (err) {
-          console.error('There has been a failure with the SFDC query, message is: ' + err);
+      var query = conn.query(qs)
+        .on("record", function (record) {
+          responseObj = {
+            custID: record.Name,
+            firstName: record.firstName__c,
+            lastName: record.lastName__c,
+            postCode: record.postCode__c,
+            address: record.Address__c,
+            emailAddress: record.emailAddress__c,
+            accountID: record.accountDet__c
+          };
+          //records.push(responseObj);
+        })
+        .on("end", function () {
+          console.log("total in database : " + query.totalSize);
+          console.log("total fetched : " + query.totalFetched);
+          resolve(responseObj);
+        })
+        .on("error", function (err) {
+          console.error(err);
           resolve(err);
-        }
-        console.log("ID: " + result.records[0].firstName__c);
-        resolve(result.records[0]);
-      });
+        })
+        .run({ autoFetch: true, maxFetch: 1000 }); // synonym of Query#execute();
     })
   }
-
-
 };
 
 
