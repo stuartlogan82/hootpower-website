@@ -20,17 +20,40 @@ class LoggedInView extends React.Component {
   render() {
     return (<main>
       <section className="section-account">
-        <div className="u-center-text u-margin-bottom-medium">
-          <h2 className="heading-secondary">
-            Welcome, {this.props.userInformation.firstName} {this.props.userInformation.lastName} <strong>({this.props.userInformation.accountNumber})</strong>
-          </h2>
-          <p><button className="btn btn-xs btn-primary" onClick={this.onLogOut}>Log Out</button></p>
-        </div>
+        
         <div className="container">
 
           <div className="row">
             <div className="col-sm-7">
+              
+            <div className="card">
+                <div className="card-header card-header-primary">
+                  <h2>Account Details</h2>  
+                </div> 
+                <div className="card-body">
+                  <table className="table table-condensed">
+                    <tr>
+                      <th>Name</th>
+                      <td>{this.props.userInformation.firstName} {this.props.userInformation.lastName}</td>
+                    </tr>
+                    <tr>
+                      <th>Account Number</th>
+                      <td>{this.props.userInformation.accountNumber}</td>
+                    </tr>
+                    <tr>
+                      <th>Sign Out</th>
+                      <td><button className="btn btn-xs btn-primary" onClick={this.onLogOut}>Log Out</button></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+
+              <hr />
+              
               <UsageChart />
+
+              
+
             </div>
 
             <div className="col-sm-5">
