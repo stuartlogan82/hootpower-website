@@ -11,6 +11,12 @@ class LoggedInView extends React.Component {
     super(props);
   }
 
+
+  onLogOut = () => {
+    this.props.onLogin(false);
+}
+
+
   render() {
     return (<main>
       <section className="section-account">
@@ -18,6 +24,7 @@ class LoggedInView extends React.Component {
           <h2 className="heading-secondary">
             Welcome, {this.props.userInformation.firstName} {this.props.userInformation.lastName} <strong>({this.props.userInformation.accountNumber})</strong>
           </h2>
+          <p><button className="btn btn-xs btn-primary" onClick={this.onLogOut}>Log Out</button></p>
         </div>
         <div className="container">
 

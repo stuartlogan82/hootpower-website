@@ -16,23 +16,24 @@ class App extends React.Component {
         accountNumber: "JLAW11111"
       }
     };
-
-    this.toggleLoginState = this.toggleLoginState.bind(this);
-
   }
 
-  toggleLoginState() {
+  toggleLoginState = (logIn) => {
     this.setState(state => ({
-      isLoggedIn: !state.isLoggedIn
+      isLoggedIn: logIn
     }));
   }
+
 
   render() {
     return (
       <>
-        <button className="btn btn-default" onClick={this.toggleLoginState}>Toggle Login State</button>
         <Header isLoggedIn={this.state.isLoggedIn} />
-        {this.state.isLoggedIn ? (<LoggedInView userInformation={this.state.userInformation} />) : (<HomePageView />)}
+        {this.state.isLoggedIn ? 
+          ( <LoggedInView onLogin={this.toggleLoginState} userInformation={this.state.userInformation} />) 
+          : 
+          ( <HomePageView onLogin={this.toggleLoginState} />)
+        }
       </>
     );
   }
