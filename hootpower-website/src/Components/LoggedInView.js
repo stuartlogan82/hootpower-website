@@ -2,11 +2,18 @@ import React from 'react';
 import UsageChart from '../Components/UsageChart';
 import '@progress/kendo-theme-material/dist/all.css';
 import WebChat from './WebChat';
+import Configuration from '../Data/Configuration';
+import RequestService from '../Data/RequestService';
 
 class LoggedInView extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      mounted: false
+    }
+    this.service = new RequestService();
+
   }
 
 
@@ -16,6 +23,7 @@ class LoggedInView extends React.Component {
 
 
   render() {
+    console.log(this.state);
     return (<main>
       <section className="section-account">
 
@@ -29,20 +37,35 @@ class LoggedInView extends React.Component {
                   <h2>Account Details</h2>
                 </div>
                 <div className="card-body">
+                  {this.props.userInformation != null ? (
                   <table className="table table-condensed">
                     <tr>
                       <th>Name</th>
-                      <td>{this.props.userInformation.firstName} {this.props.userInformation.lastName}</td>
+                      <td>
+                        {this.props.userInformation.firstName} {this.props.userInformation.lastName}<br />
+                        {this.props.userInformation.emailAddress}
+                      </td>
                     </tr>
                     <tr>
-                      <th>Account Number</th>
-                      <td>{this.props.userInformation.accountNumber}</td>
+                      <th>Customer Number</th>
+                      <td>{this.props.userInformation.customerId}</td>
+                    </tr>
+                    <tr>
+                      <th>Customer Address</th>
+                      <td>{this.props.userInformation.address} <br />{this.props.userInformation.postCode}</td>
+                    </tr>
+                    <tr>
+                      <th>Account ID</th>
+                      <td>{this.props.userInformation.accountID}</td>
                     </tr>
                     <tr>
                       <th>Sign Out</th>
                       <td><button className="btn btn-xs btn-primary" onClick={this.onLogOut}>Log Out</button></td>
                     </tr>
-                  </table>
+                  </table>)
+                  : (<div>Loading...</div>)
+
+                }
                 </div>
               </div>
 
@@ -60,10 +83,7 @@ class LoggedInView extends React.Component {
                   <h2>How can we help?</h2>
                 </div>
                 <div className="card-body">
-                  <WebChat firstName={this.props.userInformation.firstName} />
-                  {/* <AccountButton label="Submit Meter Reading" />
-                  <AccountButton label="Request a call" />
-                  <AccountButton label="Change Address" /> */}
+                  {this.props.userInformation ? <WebChat firstName={this.props.userInformation.firstName} /> : "Loading Live Chat"}
                 </div>
               </div>
             </div>
