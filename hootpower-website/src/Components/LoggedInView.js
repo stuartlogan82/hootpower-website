@@ -7,7 +7,7 @@ import WebChat from './WebChat';
 
 class LoggedInView extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
   }
 
@@ -32,7 +32,7 @@ class LoggedInView extends React.Component {
                   <h2>Your account</h2>
                 </div>
                 <div className="card-body">
-                  <WebChat />
+                  <WebChat firstName={this.props.userInformation.firstName} />
                   {/* <AccountButton label="Submit Meter Reading" />
                   <AccountButton label="Request a call" />
                   <AccountButton label="Change Address" /> */}

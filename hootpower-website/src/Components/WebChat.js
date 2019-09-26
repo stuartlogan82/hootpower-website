@@ -9,17 +9,28 @@ class WebChat extends Component {
   channel;
   client;
 
+
   constructor(props) {
     super(props);
+    this.bot = {
+      id: 0
+    };
+
     this.state = {
       error: null,
       isLoading: true,
-      messages: []
+      messages: [{
+        author: this.bot,
+        suggestedActions: [{
+          value: "Submit Meter Reading",
+          type: "reply"
+        }]
+      }]
     };
 
     this.user = {
-      id: props.username,
-      name: props.username
+      id: "",
+      firstName: props.firstName
     };
 
     this.setupChatClient = this.setupChatClient.bind(this);
@@ -37,6 +48,7 @@ class WebChat extends Component {
   }
 
   componentDidMount() {
+    console.log(this.user);
     fetch('https://iam.twilio.com/v1/Accounts/ACe521d5e94344b6e3cfa9befa02a3521b/Tokens', {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
@@ -46,11 +58,11 @@ class WebChat extends Component {
       .then(data => {
         let body = {
           "FlexFlowSid": "FO90bc940831c16d9703717f31373e2449",
-          "ChatFriendlyName": "Webhchat",
-          "CustomerFriendlyName": "Customer",
+          "ChatFriendlyName": "Webchat",
+          "CustomerFriendlyName": this.user.firstName,
           "Identity": data.identity
         }
-
+        this.user.id = data.identity;
         this.token = data.token;
         let headers = new Headers();
         headers.append('Authorization', 'Basic ' + base64.encode("token:" + data.token));
@@ -73,7 +85,11 @@ class WebChat extends Component {
             this.channel = channel;
             this.setState({ isLoading: false });
             channel.getMessages().then(this.messagesLoaded);
-            channel.on('messageAdded', this.messageAdded);
+            channel.on('messageAdded', message => {
+              this.messageAdded(message)
+            });
+
+            channel.sendMessage("ahoy");
           }
           )
       })
@@ -81,7 +97,7 @@ class WebChat extends Component {
 
   }
 
-  setupChatClient(client, channelSid) {
+  setupChatClient(client) {
     this.client = client;
     console.log("CLIENT>>>> " + client);
     this.client
@@ -111,9 +127,15 @@ class WebChat extends Component {
   }
 
   twilioMessageToKendoMessage(message) {
+    console.log(this);
+    console.log(message);
+    let author = message.id;
+    if (message.author === this.user.id) {
+      author = this.user.firstName;
+    }
     return {
       text: message.body,
-      author: { id: message.author, name: message.author },
+      author: { id: author, name: author },
       timestamp: message.timestamp
     };
   }
@@ -152,7 +174,7 @@ class WebChat extends Component {
         user={this.user}
         messages={this.state.messages}
         onMessageSend={this.sendMessage}
-        width={500}
+
       />
     );
   }
