@@ -8,21 +8,21 @@ exports.handler = async function (context, event, callback) {
 
     console.log('This has started');
     const jsforce = require('jsforce');
-    var input = event.id;
+    var input = event.accountid;
 
     console.log('input is ', input);
     const conn = new jsforce.Connection();
 
     let logger = await login();
     console.log('This is the response from login: ', logger);
-    var queryString = `SELECT accountID__c, dayMonth__c, frequency__c FROM Schedule__c where Name = '${input}'`;
+    var queryString = `SELECT Name, accountID__c, dayMonth__c, frequency__c FROM Schedule__c where accountID__c = '${input}'`;
     let sForceQuery = await sfdcQuery(queryString);
 
     let responseObj = {
         id: sForceQuery.Name,
-        accountId: sForceQuery.accountDet__c,
-        amount: sForceQuery.amount__c,
-        currencyType: sForceQuery.currencyType__c
+        accountId: sForceQuery.accountID__c,
+        frequency: sForceQuery.frequency__c,
+        dayMonth: sForceQuery.dayMonth__c
     };
     response.setBody(responseObj);
     logger = await logout();

@@ -8,7 +8,7 @@ exports.handler = async function (context, event, callback) {
 
     console.log('This has started');
     const jsforce = require('jsforce');
-    var input = event.empId;
+    var input = event.employeeid;
 
     console.log('input is ', input);
     const conn = new jsforce.Connection();

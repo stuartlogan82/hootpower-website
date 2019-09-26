@@ -8,14 +8,14 @@ exports.handler = async function (context, event, callback) {
 
     console.log('This has started');
     const jsforce = require('jsforce');
-    var input = event.mpan;
+    var input = event.meterid;
 
     console.log('input is ', input);
     const conn = new jsforce.Connection();
 
     let logger = await login();
     console.log('This is the response from login: ', logger);
-    var queryString = `SELECT Name, Id, mpan__c, type__c FROM Meter__c where mpan__c = '${input}'`;
+    var queryString = `SELECT Name, Meter__c, date__c, value__c FROM Reading__c where Meter__c = '${input}'`;
     let results = await sfdcQuery(queryString);
     response.setBody(results);
     logger = await logout();
@@ -52,9 +52,9 @@ exports.handler = async function (context, event, callback) {
                 .on("record", function (record) {
                     let responseObj = {
                         name: record.Name,
-                        mpan: record.mpan__c,
-                        type: record.type__c,
-                        meterId: record.Id
+                        value: record.value__c,
+                        meterId: record.Meter__c,
+                        date: record.date__c
                     };
                     records.push(responseObj);
                 })

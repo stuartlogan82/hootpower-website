@@ -8,23 +8,16 @@ exports.handler = async function (context, event, callback) {
 
     console.log('This has started');
     const jsforce = require('jsforce');
-    var input = event.id;
+    var input = event.accountid;
 
     console.log('input is ', input);
     const conn = new jsforce.Connection();
 
     let logger = await login();
     console.log('This is the response from login: ', logger);
-    var queryString = `SELECT Name, accountDet__c, amount__c, currencyType__c FROM Payments__c where Name = '${input}'`;
-    let sForceQuery = await sfdcQuery(queryString);
-
-    let responseObj = {
-        id: sForceQuery.Name,
-        accountId: sForceQuery.accountDet__c,
-        amount: sForceQuery.amount__c,
-        currencyType: sForceQuery.currencyType__c
-    };
-    response.setBody(responseObj);
+    var queryString = `SELECT Name, accountDet__c, date__c, dueDate__c, amount__c, currencyType__c FROM Payments__c where accountDet__c = '${input}'`;
+    let results = await sfdcQuery(queryString);
+    response.setBody(results);
     logger = await logout();
     callback(null, response);
 
@@ -53,18 +46,30 @@ exports.handler = async function (context, event, callback) {
     }
 
     function sfdcQuery(qs) {
+        var records = [];
         return new Promise(function (resolve, reject) {
-            var records = [];
-            conn.query(qs, function (err, result) {
-                if (err) {
-                    console.error('There has been a failure with the SFDC query, message is: ' + err);
+            var query = conn.query(qs)
+                .on("record", function (record) {
+                    let responseObj = {
+                        id: record.Name,
+                        accountId: record.accountDet__c,
+                        amount: record.amount__c,
+                        currencyType: record.currencyType__c,
+                        date: record.date__c,
+                        dueDate: record.dueDate__c
+                    };
+                    records.push(responseObj);
+                })
+                .on("end", function () {
+                    console.log("total in database : " + query.totalSize);
+                    console.log("total fetched : " + query.totalFetched);
+                    resolve(records);
+                })
+                .on("error", function (err) {
+                    console.error(err);
                     resolve(err);
-                }
-                console.log("ID: " + result.records[0].firstName__c);
-                resolve(result.records[0]);
-            });
+                })
+                .run({ autoFetch: true, maxFetch: 1000 }); // synonym of Query#execute();
         })
     }
-
-
 };
