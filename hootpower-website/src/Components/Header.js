@@ -12,7 +12,8 @@ class Header extends React.Component {
       <header className="header">
         <div className="header__logo-box">
           <img src="owl.png" alt="Logo" className="header__logo" />
-          <h1 className="header__text">Hoot Power
+          <h1 className="header__text">Hoot Power <br />
+            <small className="header__subtitle">Owl you need is us</small>
           </h1>
         </div>
 

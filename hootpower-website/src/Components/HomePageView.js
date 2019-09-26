@@ -16,7 +16,7 @@ class HomePageView extends React.Component {
 
   render() {
     return (
-      <>
+      <section className="section-account">
         <div className="container u-margin-top-medium">
           <div class="row">
             <div class="col-lg-4 col-md-6 ml-auto mr-auto">
@@ -142,7 +142,7 @@ class HomePageView extends React.Component {
           </div>
 
         </div>
-      </>
+      </section>
     );
   }
 }
