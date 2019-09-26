@@ -38,7 +38,8 @@ class WebChat extends Component {
     this.messageAdded = this.messageAdded.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.handleError = this.handleError.bind(this);
-    this.twilioMessageToKendoMessage = this.twilioMessageToKendoMessage.bind(this)
+    this.twilioMessageToKendoMessage = this.twilioMessageToKendoMessage.bind(this);
+    this.addSuggestions = this.addSuggestions.bind(this);
 
   }
 
@@ -85,37 +86,18 @@ class WebChat extends Component {
           .then(channel => {
             this.channel = channel;
             this.setState({ isLoading: false });
-            channel.getMessages().then(this.messagesLoaded).then(() => {
-              const suggestions = {
-                author: this.bot,
-                suggestedActions:
-                  [{
-                    value: "submit a meter reading",
-                    type: "reply"
-                  },
-                  {
-                    value: "I've moved house",
-                    type: "reply"
-                  },
-                  {
-                    value: "See my appointments",
-                    type: "reply"
-                  },
-                  {
-                    value: "Smart meter install",
-                    type: "reply"
-                  }]
-              }
-              let messages = this.state.messages
-              messages.push(suggestions)
-              messages.push()
-              this.setState(prevState => ({
-                ...prevState,
-                messages
-              }))
-            });
+            channel.getMessages().then(this.messagesLoaded).then(this.addSuggestions);
             channel.on('messageAdded', message => {
+              console.log(message.index);
+
               this.messageAdded(message)
+
+              if (message.body.includes("Welcome to Hoot Power")) {
+                this.addSuggestions();
+              }
+              if (message.body.includes("Is there anything else I can help you with?")) {
+                this.addSuggestions();
+              }
             });
 
             channel.sendMessage("ahoy");
@@ -188,6 +170,39 @@ class WebChat extends Component {
   sendMessage(event) {
     this.channel.sendMessage(event.message.text);
   }
+
+  addSuggestions() {
+    console.log("Add suggestions called");
+    const suggestions = {
+      author: this.bot,
+      suggestedActions:
+        [{
+          value: "submit a meter reading",
+          type: "reply"
+        },
+        {
+          value: "I've moved house",
+          type: "reply"
+        },
+        {
+          value: "See my appointments",
+          type: "reply"
+        },
+        {
+          value: "Smart meter install",
+          type: "reply"
+        }]
+    }
+    let messages = this.state.messages
+    messages.push(suggestions)
+    messages.push()
+    this.setState(prevState => ({
+      ...prevState,
+      messages
+    }))
+    console.log(this.state);
+  }
+
 
   componentWillUnmount() {
     this.client.shutdown();
