@@ -38,7 +38,7 @@ class WebChat extends Component {
     this.messageAdded = this.messageAdded.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.handleError = this.handleError.bind(this);
-    this.twilioMessageToKendoMessage  = this.twilioMessageToKendoMessage.bind(this)
+    this.twilioMessageToKendoMessage = this.twilioMessageToKendoMessage.bind(this)
 
   }
 
@@ -130,13 +130,13 @@ class WebChat extends Component {
   twilioMessageToKendoMessage(message) {
     console.log(this);
     console.log(message);
-    let author = message.id;
+    let author = message.author;
     if (message.author === this.user.id) {
       author = this.user.firstName;
     }
     return {
       text: message.body,
-      author: { id: author, name: author },
+      author: { id: message.author, name: author },
       timestamp: message.timestamp
     };
   }
@@ -171,15 +171,20 @@ class WebChat extends Component {
     } else if (this.state.isLoading) {
       return <p>Loading chat...</p>;
     }
-    return (
-      <ChatUI
-        user={this.user}
-        messages={this.state.messages}
-        onMessageSend={this.sendMessage}
 
-      />
-    );
+    if (this.user.id) {
+      return (
+
+        <ChatUI
+          user={this.user}
+          messages={this.state.messages}
+          onMessageSend={this.sendMessage}
+
+        />
+      );
+    } else {
+      return null;
+    }
   }
 }
-
 export default WebChat;
