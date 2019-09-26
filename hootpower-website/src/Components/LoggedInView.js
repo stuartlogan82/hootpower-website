@@ -4,17 +4,25 @@ import '@progress/kendo-theme-material/dist/all.css';
 import Button from './AccountButton'
 import AccountButton from './AccountButton';
 import WebChat from './WebChat';
+import Configuration from '../Data/Configuration';
+import RequestService from '../Data/RequestService';
 
 class LoggedInView extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      mounted: false
+    }
+    this.service = new RequestService();
+
   }
 
 
   onLogOut = () => {
     this.props.onLogin(false);
-}
+  }
+
 
 
   render() {
@@ -25,26 +33,29 @@ class LoggedInView extends React.Component {
 
           <div className="row">
             <div className="col-sm-7">
-              
             <div className="card">
                 <div className="card-header card-header-primary">
                   <h2>Account Details</h2>  
                 </div> 
                 <div className="card-body">
+                  {this.state.userInformation != null ? (
                   <table className="table table-condensed">
                     <tr>
                       <th>Name</th>
                       <td>{this.props.userInformation.firstName} {this.props.userInformation.lastName}</td>
                     </tr>
                     <tr>
-                      <th>Account Number</th>
-                      <td>{this.props.userInformation.accountNumber}</td>
+                      <th>Customer Number</th>
+                      <td>{this.props.userInformation.customerId}</td>
                     </tr>
                     <tr>
                       <th>Sign Out</th>
                       <td><button className="btn btn-xs btn-primary" onClick={this.onLogOut}>Log Out</button></td>
                     </tr>
-                  </table>
+                  </table>)
+                  : (<div>Loading...</div>)
+
+                }
                 </div>
               </div>
 
