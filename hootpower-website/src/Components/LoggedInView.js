@@ -27,17 +27,19 @@ class LoggedInView extends React.Component {
                   <h2>Your account</h2>
                 </div>
                 <div className="card-body">
-                  <AccountButton label="Submit Meter Reading" />
+                  <WebChat />
+                  {/* <AccountButton label="Submit Meter Reading" />
                   <AccountButton label="Request a call" />
-                  <AccountButton label="Change Address" />
+                  <AccountButton label="Change Address" /> */}
                 </div>
               </div>
             </div>
 
           </div>
         </div>
+
       </section>
-      <WebChat />
+
     </main>);
   }
 }

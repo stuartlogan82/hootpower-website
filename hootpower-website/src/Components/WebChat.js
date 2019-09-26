@@ -15,6 +15,17 @@ class WebChat extends Component {
       messages: []
     };
 
+    this.user = {
+      id: props.username,
+      name: props.username
+    };
+
+    this.setupChatClient = this.setupChatClient.bind(this);
+    this.messagesLoaded = this.messagesLoaded.bind(this);
+    this.messageAdded = this.messageAdded.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
+    this.handleError = this.handleError.bind(this);
+
   }
 
   encodeFormData = (data) => {
@@ -54,8 +65,9 @@ class WebChat extends Component {
         Chat.create(this.token)
           .then(client => client.getChannelBySid(data.sid))
           .then(channel => {
+            this.setState({ isLoading: false });
+            channel.getMessages().then(this.messagesLoaded);
             channel.on('messageAdded', message => console.log(message));
-            channel.sendMessage("Hello Matthias");
           }
           )
       })
@@ -92,8 +104,51 @@ class WebChat extends Component {
     // });
   }
 
+  twilioMessageToKendoMessage(message) {
+    return {
+      text: message.body,
+      author: { id: message.author, name: message.author },
+      timestamp: message.timestamp
+    };
+  }
+
+  messagesLoaded(messagePage) {
+    this.setState({
+      messages: messagePage.items.map(this.twilioMessageToKendoMessage)
+    });
+  }
+
+  messageAdded(message) {
+    this.setState(prevState => ({
+      messages: [
+        ...prevState.messages,
+        this.twilioMessageToKendoMessage(message)
+      ]
+    }));
+  }
+
+  sendMessage(event) {
+    this.channel.sendMessage(event.message.text);
+  }
+
+  componentWillUnmount() {
+    this.client.shutdown();
+  }
+
   render() {
-    return <div>Success Chat Loaded</div>
+    if (this.state.error) {
+      return <p>{this.state.error}</p>;
+    } else if (this.state.isLoading) {
+      return <p>Loading chat...</p>;
+    }
+    return (
+      <ChatUI
+        user={this.user}
+        messages={this.state.messages}
+        onMessageSend={this.sendMessage}
+        width={500}
+      />
+    );
   }
 }
 
