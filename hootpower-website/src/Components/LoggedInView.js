@@ -6,12 +6,17 @@ import AccountButton from './AccountButton';
 import WebChat from './WebChat';
 
 class LoggedInView extends React.Component {
+
+  constructor(props){
+    super(props);
+  }
+
   render() {
     return (<main>
       <section className="section-account">
         <div className="u-center-text u-margin-bottom-medium">
           <h2 className="heading-secondary">
-            Welcome, Customer Name
+            Welcome, {this.props.userInformation.firstName} {this.props.userInformation.lastName} <strong>({this.props.userInformation.accountNumber})</strong>
           </h2>
         </div>
         <div className="container">
