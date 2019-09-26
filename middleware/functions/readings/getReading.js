@@ -1,0 +1,75 @@
+
+exports.handler = async function (context, event, callback) {
+    let response = new Twilio.Response();
+    response.appendHeader("Access-Control-Allow-Origin", "*");
+    response.appendHeader("Access-Control-Allow-Methods", "OPTIONS POST GET");
+    response.appendHeader("Access-Control-Allow-Headers", "Content-Type");
+    response.appendHeader("Content-Type", "application/json");
+
+    //const jsforcelib = require('../../libs/jsforce-lib');
+
+    console.log('This has started');
+    const jsforce = require('jsforce');
+    var input = event.meterid;
+
+    console.log('input is ', input);
+    const conn = new jsforce.Connection();
+
+    let logger = await login();
+    console.log('This is the response from login: ', logger);
+    var queryString = `SELECT Name, Meter__c, date__c, value__c FROM Reading__c where Meter__c = '${input}'`;
+    let results = await sfdcQuery(queryString);
+    response.setBody(results);
+    //logger = await logout();
+    callback(null, response);
+
+    function login() {
+        return new Promise(function (resolve, reject) {
+            const uName = context.SFDC_USER;
+            const token = context.SFDC_TOKEN;
+            const oldpword = context.SFDC_PWORD;
+            const pWord = oldpword + token;
+            conn.login(uName, pWord, function (err, userInfo) {
+                if (err) { console.log('This is the error from the login attempt: ' + err) }
+                console.log('In the login function, here is access token: ' + conn.accessToken);
+                resolve('success');
+            });
+        })
+    }
+
+    function logout() {
+        return new Promise(function (resolve, reject) {
+            conn.logout(function (err) {
+                if (err) { return console.error(err); }
+                console.log('Logout');
+                resolve('success');
+            });
+        })
+    }
+
+    function sfdcQuery(qs) {
+        var records = [];
+        return new Promise(function (resolve, reject) {
+            var query = conn.query(qs)
+                .on("record", function (record) {
+                    let responseObj = {
+                        name: record.Name,
+                        value: record.value__c,
+                        meterId: record.Meter__c,
+                        date: record.date__c
+                    };
+                    records.push(responseObj);
+                })
+                .on("end", function () {
+                    console.log("total in database : " + query.totalSize);
+                    console.log("total fetched : " + query.totalFetched);
+                    resolve(records);
+                })
+                .on("error", function (err) {
+                    console.error(err);
+                    resolve(err);
+                })
+                .run({ autoFetch: true, maxFetch: 1000 }); // synonym of Query#execute();
+        })
+    }
+};
