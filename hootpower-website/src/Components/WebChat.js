@@ -38,6 +38,7 @@ class WebChat extends Component {
     this.messageAdded = this.messageAdded.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.handleError = this.handleError.bind(this);
+    this.twilioMessageToKendoMessage  = this.twilioMessageToKendoMessage.bind(this)
 
   }
 
@@ -147,6 +148,7 @@ class WebChat extends Component {
   }
 
   messageAdded(message) {
+
     this.setState(prevState => ({
       messages: [
         ...prevState.messages,
